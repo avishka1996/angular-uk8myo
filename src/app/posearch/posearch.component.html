@@ -1,0 +1,360 @@
+<div class="main-content"  style ="margin-top: 0;">
+    <div class="container-fluid">
+            <div class="row">
+                    <div class="col-md-6">
+                        <div class="card"  style=" background: linear-gradient(60deg, #eef1da, #dcdeca75);">
+                            <div class="card-header card-header-success">
+                                    <h4 class="card-title ">
+                                            <a  class="simple-text">
+                                                <div>
+                                                    <i class="material-icons" style="font-size: 45px;">search</i>
+                                                    <span>Po search</span>
+                                                </div>
+                                            </a>
+                                        </h4>
+                           </div>
+                           <!-- style=" background: linear-gradient(60deg, #eef1da, #dcdeca75); -->
+                            <div class="card-body">
+                                <form [formGroup]="processForm" novalidate> 
+                                    <div formGroupName="processData" novalidate>
+              <div class="row">
+                  <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput id = "poNo" formControlName="poNo" placeholder="PO Number">
+                    <button mat-button [hidden] = "!poNo.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('poNo')">
+                        <mat-icon>close</mat-icon>
+                        </button> 
+                  </mat-form-field></div>
+                  <div class="col-md-4">
+                        <mat-form-field>
+                          <input matInput formControlName="dcNo" placeholder="DC Number">
+                          <button mat-button [hidden] = "!dcNo.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('dcNo')">
+                              <mat-icon>close</mat-icon>
+                              </button> 
+                        </mat-form-field></div>
+                      </div>
+                        <div class="row">
+                        <div class="col-md-4">
+                                <mat-form-field>
+                                  <input matInput formControlName="vendorNo" placeholder="Vendor Number">
+                                  <button mat-button [hidden] = "!vendorNo.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('vendorNo')">
+                                      <mat-icon>close</mat-icon>
+                                      </button>
+                                </mat-form-field></div>
+                               
+                                <div class="col-md-4">
+                                        <mat-form-field>
+                                          <input matInput [matDatepicker]="orderDate" formControlName="orderDate" placeholder="Order Date">
+                                         <mat-datepicker-toggle matSuffix [for]="orderDate"></mat-datepicker-toggle>
+                                         <mat-datepicker #orderDate></mat-datepicker>
+                                         <button mat-button [hidden] = "!orderDate1.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('orderDate')">
+                                            <mat-icon>close</mat-icon>
+                                            </button>
+                                        </mat-form-field>
+                                    </div></div>
+                                        <div class="row">
+                                        <div class="col-md-4">
+                                                <mat-form-field>
+                                                  <input matInput [matDatepicker]="deliveryDate" formControlName="deliveryDate" placeholder="Delivery date">
+                                                  <mat-datepicker-toggle matSuffix [for]="deliveryDate"></mat-datepicker-toggle>
+                                                  <mat-datepicker #deliveryDate></mat-datepicker>
+                                                  <button mat-button  [hidden] = "!deliveryDate1.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('deliveryDate')">
+                                                      <mat-icon>close</mat-icon>
+                                                      </button>
+                                                </mat-form-field></div></div>
+                                            
+                <button mat-raised-button type="submit" class="btn btn-success pull-right" [disabled]="processForm.pristine" (click)="searchPO()">Search PO</button>
+                <button mat-raised-button type="submit" class="btn btn-success pull-right" [disabled]="processForm.pristine" (click)="clearForm()">Clear</button>
+                    <div class="clearfix"> </div></div>
+             <!--  <div class="col-md-4"> <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="searchPO()">Search PO</button></div> -->
+                        <!--   <div class="clearfix"></div> -->
+            </form></div></div></div>
+            <div class="col-md-12" [hidden]="!showSearch">
+                <div class="card" style=" background: linear-gradient(60deg, #eef1da, #dcdeca75);">
+                    
+                    <div class="card-header card-header-success">
+                        <h4 class="card-title ">
+                            <a  class="simple-text">
+                                <div>
+                                    <span class="col-md-2">PoSearch List</span>
+                                   <!--  <span> <mat-form-field class="col-md-2">
+                                        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                      </mat-form-field> </span> -->
+                                    
+                                </div>
+                            </a>
+                          </h4>
+                        
+                       <!--  <div class="col-md-2">
+                            <mat-form-field>
+                                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                              </mat-form-field>
+                            </div> -->
+                       <!--  <p class="card-category"> Here is a subtitle for this table</p> -->
+                      </div>
+                    <div class="card-body">
+                        <span> <mat-form-field class="col-md-2">
+                            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="PoSearch List Filter">
+                          </mat-form-field> </span>
+                        <div class="table-responsive">
+                            <mat-table #table  [dataSource]="dataSource" matSort>
+                                <ng-container matColumnDef="poNo">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Po Number</mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.poNo}} </mat-cell>
+                                </ng-container>								
+								  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                       <!-- <ng-container matColumnDef="expandedDetail">
+                         <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                           <div class="example-element-detail"
+                                [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                     </div>
+                         </td>
+                       </ng-container> -->
+                                <ng-container matColumnDef="dcNo">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> DC Number</mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.dcNo}}</mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="deliveryDate">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Date</mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.deliveryDate}} </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="vendorNo">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Vendor No </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.vendorNo}} </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="status">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>
+                                        <mat-cell *matCellDef="let element" [ngStyle]="{'color':element.status === 'Scheduled' ? 'green' : 'red' ,'font-weight': 'bold'}">  
+                                            <a  class="simple-text">
+                                                <div>
+                                                    <img *ngIf="element.status === 'Scheduled'" src="../../assets/img/calendar.png" style="width: 30px;margin-right: 5px;">
+                                                    <img *ngIf="element.status === 'Exception'" src="../../assets/img/exception.png" style="width: 30px;margin-right: 5px;">
+                                                    <span>{{element.status}} </span>
+                                                     
+                                                   <!--  <i class="material-icons" *ngIf="element.status === 'Scheduled'">calendar_today</i> -->
+                                                    <!-- <i class="material-icons" *ngIf="element.status === 'Exception'">error_outline</i> -->
+                                                </div>
+                                            </a>
+
+                                        </mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="deliveryDock">
+                                          <mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Dock </mat-header-cell>
+                                          <mat-cell *matCellDef="let element"> {{element.deliveryDock}} </mat-cell>
+                                        </ng-container>
+                                        <ng-container matColumnDef="deliveryTime">
+                                            <mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Time </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> {{element.deliveryTime}} </mat-cell>
+                                          </ng-container>                          
+                                <mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: columnsToDisplay;"
+                                      
+                                         class="element-row"
+                                              [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl"
+                                               (toggleChange)="onToggleChange($event)" (click) ="searchAudit(row.poNo)">
+                                        </mat-row >
+							<!-- 	 <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+                           class="example-element-row"
+                           [class.example-expanded-row]="expandedElement === element"
+                           (click)="expandedElement = element">
+                       </tr> -->
+                       <!-- <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr> -->
+                     </mat-table>
+                                    <mat-paginator #paginator style=" background: transparent;"
+                                    [pageSize]="2"
+                                   [pageSizeOptions]="[1,2,5,10]">
+                                     </mat-paginator>
+                       
+                        </div>
+                        <ng-template #tpl let-element>
+                            <div class="mat-row" [@detailExpand] style="overflow: hidden; margin: 15px;">
+                                <div class="col-md-12" *ngIf="!showAuditData"> 
+                                    <P> No Audit data available</P>
+                              </div>
+                                <div class="col-md-12" [hidden]="!showAuditData"> 
+                                <div class="card" style=" background: linear-gradient(60deg, #f3e9b9, #f9eabf75);">
+                                    <div class="card-header card-header-warning" style="padding: 5px;">
+                                          <h4 class="card-title ">
+                                                  <a  class="simple-text">
+                                                      <div>
+                                                          <i class="material-icons">assignment</i>
+                                                          <span> Audit List</span>
+                                                      </div>
+                                                  </a>
+
+
+
+                                              </h4>
+                                    </div>
+                                    <div class="card-body">
+                                        <span> <mat-form-field class="col-md-2">
+                                            <input matInput (keyup)="applyFilter1($event.target.value)" placeholder="AuditList Filter">
+                                          </mat-form-field> </span>
+                          <div class="table-responsive">
+                          <mat-table [dataSource]="dataSource1" #aSort="matSort" matSort>
+                          
+                                      <ng-container matColumnDef="oldDeliveryDate">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Previous Delivery Date </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.oldDeliveryDate}} </mat-cell>
+                                      </ng-container>
+                                  
+                                    
+                                      <ng-container matColumnDef="oldDeliveryTime">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Previous Delivery Time </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.oldDeliveryTime}} </mat-cell>
+                                      </ng-container>
+                                  
+                                     
+                                      <ng-container matColumnDef="changedBy">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Changed By </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.changedBy}} </mat-cell>
+                                      </ng-container>
+                                  
+                                     
+                                      <ng-container matColumnDef="changedOn">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Changed On </mat-header-cell>
+                                        <mat-cell *matCellDef="let element"> {{element.changedOn}} </mat-cell>
+                                      </ng-container>
+                                      <ng-container matColumnDef="reasonCode">
+                                              <mat-header-cell *matHeaderCellDef mat-sort-header> Reason Code </mat-header-cell>
+                                              <mat-cell *matCellDef="let element"> {{element.reasonCode}} </mat-cell>
+                                            </ng-container>
+                                  
+                                      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                                          </mat-table>
+                                          <mat-paginator #paginator1 style=" background: transparent;"
+                                [pageSize]="3"
+                               [pageSizeOptions]="[1,2,5,10]">
+                                 </mat-paginator>
+                                      </div>
+                                               </div></div>
+                                             </div>
+                            </div>
+                          </ng-template>
+                    </div>
+                    
+                </div>
+          </div>
+          </div></div>
+
+        </div>
+
+
+
+
+<!--         <mat-expansion-panel style="
+        box-shadow: none; background: transparent">
+          <mat-expansion-panel-header (click)="display()"> 
+            <mat-panel-title>{{result.poNo}}</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="row" [hidden]="!showAudit">
+          <mat-accordion multi="true">
+        <div class="card" style=" background: linear-gradient(60deg, #f3e9b9, #f9eabf75);">
+          <div class="card-header card-header-warning" style="padding: 5px;">
+                <h4 class="card-title ">
+                        <a  class="simple-text">
+                            <div>
+                             <i class="material-icons">assignment</i>
+                                <span> Audit List</span>
+                            </div>
+                        </a>
+                    </h4>
+             <p class="card-category"> Here is a subtitle for this table</p> 
+          </div>
+          <div class="card-body">
+                     
+<div class="table-responsive">
+<table class="table">
+<thead class=" text-primary">
+<th>Previous Delivery Date</th>
+<th>Previous Delivery Time</th>
+<th>Changed By</th>
+<th>Changed On</th>
+<th>Reason Code</th>
+</thead>
+<tbody>
+<tr *ngFor="let audit of result.auditList">                
+           <td>{{audit.oldDeliveryDate}}</td>
+             <td>{{audit.oldDeliveryTime}}</td>
+               <td>{{audit.changedBy}}</td>
+                   <td>{{audit.changedOn}}</td>
+                     <td>{{audit.reasonCode}}</td>
+</tr> 
+</tbody>
+</table> 
+    </div>
+                     </div>
+                   </div>
+                  </mat-accordion>  </div>
+                </mat-expansion-panel>  
+
+-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       <!--  <mat-table [dataSource]="dataSource">
+
+            <ng-container matColumnDef="oldDeliveryDate">
+              <mat-header-cell *matHeaderCellDef> Previous Delivery Date </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.oldDeliveryDate}} </mat-cell>
+            </ng-container>
+        
+          
+            <ng-container matColumnDef="oldDeliveryTime">
+              <mat-header-cell *matHeaderCellDef> Previous Delivery Time </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.oldDeliveryTime}} </mat-cell>
+            </ng-container>
+        
+           
+            <ng-container matColumnDef="changedBy">
+              <mat-header-cell *matHeaderCellDef> Changed By </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.changedBy}} </mat-cell>
+            </ng-container>
+        
+           
+            <ng-container matColumnDef="changedOn">
+              <mat-header-cell *matHeaderCellDef> Changed On </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.changedOn}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="reasonCode">
+                    <mat-header-cell *matHeaderCellDef> Reason Code </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.reasonCode}} </mat-cell>
+                  </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                </mat-table> -->
+
+                
+                                                <!--   <div class="row"   style= "box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+                                                  background-color: ivory;">
+                                                    <mat-list role="list" style= "margin-bottom: 15px;">
+                                                        <h3 mat-subheader style="font-size: 15px;font-weight: bolder;">Audit Details</h3>
+                                                        <mat-list-item role="listitem" style="height: 20px;font-size: 13px;">OldDeliveryDock:  {{result.auditList[0].oldDeliveryDock}}</mat-list-item>
+                                                        <mat-list-item role="listitem" style="height: 20px;font-size: 13px;">OldDeliveryDate:  {{result.auditList[0].oldDeliveryDate}}</mat-list-item>
+                                                        <mat-list-item role="listitem" style="height: 20px;font-size: 13px;">OldDeliveryTime:  {{result.auditList[0].oldDeliveryTime}}</mat-list-item>
+                                                        <mat-list-item role="listitem" style="height: 20px;font-size: 13px;">ChangedBy:  {{result.auditList[0].changedBy}}</mat-list-item>
+                                                        <mat-list-item role="listitem" style="height: 20px;font-size: 13px;">ChangedOn:  {{result.auditList[0].changedOn}}</mat-list-item>
+                                                        <mat-list-item role="listitem" style="height: 20px;font-size: 13px;">ReasonCode :  {{result.auditList[0].reasonCode}}</mat-list-item>
+                                                    </mat-list>
+                                                </div> -->
+                                            
