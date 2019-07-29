@@ -9,4 +9,5 @@ export class ProcessData {
   orderDate:string;
   deliveryDate:string;
   vendorNo : string;
+  fcastQty: string;
 }

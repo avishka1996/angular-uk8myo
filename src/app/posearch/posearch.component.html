@@ -41,6 +41,12 @@
                                       <mat-icon>close</mat-icon>
                                       </button>
                                 </mat-form-field></div>
+                                <mat-form-field>
+                                <input matInput formControlName="fcastQty" placeholder="Forecast Qty">
+                                  <button mat-button [hidden] = "!fcastQty.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('fcastQty')">
+                                      <mat-icon>close</mat-icon>
+                                      </button>
+                                </mat-form-field></div>
                                
                                 <div class="col-md-4">
                                         <mat-form-field>
@@ -121,6 +127,10 @@
                                 <ng-container matColumnDef="vendorNo">
                                   <mat-header-cell *matHeaderCellDef mat-sort-header> Vendor No </mat-header-cell>
                                   <mat-cell *matCellDef="let element"> {{element.vendorNo}} </mat-cell>
+                                </ng-container>
+                                <ng-container matColumnDef="fcastQty">
+                                  <mat-header-cell *matHeaderCellDef mat-sort-header> Forecast Qty </mat-header-cell>
+                                  <mat-cell *matCellDef="let element"> {{element.fcastQty}} </mat-cell>
                                 </ng-container>
                                 <ng-container matColumnDef="status">
                                         <mat-header-cell *matHeaderCellDef mat-sort-header> Status </mat-header-cell>

@@ -5305,7 +5305,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var PosearchComponent = /** @class */ (function () {
     function PosearchComponent(booking) {
         this.booking = booking;
-        this.columnRows = ['Po Number', 'DC Number', 'Delivery Date', 'Vendor No', 'Status', 'Delivery Dock', 'Delivery Time'];
+        this.columnRows = ['Po Number', 'DC Number', 'Delivery Date', 'Vendor No','Fore' 'Status', 'Delivery Dock', 'Delivery Time'];
         this.columnsToDisplay = ['poNo', 'dcNo', 'deliveryDate', 'vendorNo', 'status', 'deliveryDock', 'deliveryTime'];
         this.displayedColumns = ['oldDeliveryDate', 'oldDeliveryTime', 'changedBy', 'changedOn', 'reasonCode'];
         /* expandedElement: ResultList[]; */
