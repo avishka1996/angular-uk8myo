@@ -46,8 +46,7 @@
                                   <button mat-button [hidden] = "!fcastQty.dirty" matSuffix mat-icon-button aria-label="Clear" (click)="clearFormValue('fcastQty')">
                                       <mat-icon>close</mat-icon>
                                       </button>
-                                </mat-form-field></div>
-                               
+                                </mat-form-field></div>                               
                                 <div class="col-md-4">
                                         <mat-form-field>
                                           <input matInput [matDatepicker]="orderDate" formControlName="orderDate" placeholder="Order Date">
@@ -71,7 +70,7 @@
                                             
                 <button mat-raised-button type="submit" class="btn btn-success pull-right" [disabled]="processForm.pristine" (click)="searchPO()">Search PO</button>
                 <button mat-raised-button type="submit" class="btn btn-success pull-right" [disabled]="processForm.pristine" (click)="clearForm()">Clear</button>
-                    <div class="clearfix"> </div></div>
+                    <div class="clearfix"> </div></div
              <!--  <div class="col-md-4"> <button mat-raised-button type="submit" class="btn btn-danger pull-right" (click)="searchPO()">Search PO</button></div> -->
                         <!--   <div class="clearfix"></div> -->
             </form></div></div></div>
