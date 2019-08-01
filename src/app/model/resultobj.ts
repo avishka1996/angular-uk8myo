@@ -14,7 +14,6 @@
         deliveryDock: string;
         dcNo: string;
         vendorNo: string;
-        fcastQty: string;
         orderDate: string;
         deliveryDate: string;
         deliveryTime: string;

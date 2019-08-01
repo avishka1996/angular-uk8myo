@@ -50,8 +50,8 @@ export class PosearchComponent implements OnInit {
   resultList: ResultList[];
   auditList: AuditList[];
   result:Result
-  columnRows = ['Po Number', 'DC Number', 'Delivery Date', 'Vendor No','Forecast Qty','Status','Delivery Dock','Delivery Time'];
-  columnsToDisplay=['poNo','dcNo','deliveryDate','vendorNo','fcastQty','status','deliveryDock','deliveryTime'];
+  columnRows = ['Po Number', 'DC Number', 'Delivery Date', 'Vendor No','Status','Delivery Dock','Delivery Time'];
+  columnsToDisplay=['poNo','dcNo','deliveryDate','vendorNo','status','deliveryDock','deliveryTime'];
   displayedColumns = ['oldDeliveryDate', 'oldDeliveryTime', 'changedBy','changedOn','reasonCode'];
   expandedElement: AuditList[]; 
   isExpansionDetailRow = (index, row) => row.hasOwnProperty('detailRow');
@@ -182,8 +182,7 @@ export class PosearchComponent implements OnInit {
         dcNo: new FormControl(),
         orderDate: new FormControl(),
         deliveryDate: new FormControl(),
-        vendorNo: new FormControl(),
-        fcastQty: new FormControl()
+        vendorNo: new FormControl()
       })
     });
   }
@@ -213,11 +212,6 @@ export class PosearchComponent implements OnInit {
     
   get vendorNo () {
     return this.processForm.get('processData').get('vendorNo');
-  }
-  
-
-  get fcastQty() {
-    return this.processForm.get('processData').get('fcastQty');
   }
   
   searchPO() {

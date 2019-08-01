@@ -3,7 +3,6 @@ export interface PurchaseOrder{
    deliveryDock: string;
    dcNo: string;
    vendorNo: string;
-   fcastQty: string;
    deliveryTime: string;
 }
 export interface PurchaseOrders{
